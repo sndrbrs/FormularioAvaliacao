@@ -7,7 +7,6 @@
     <script defer src="script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <title>Formulário de Avaliação</title>
-    <button type="button" id="generatePDF">Salvar como PDF</button>
 </head>
 
 <body>
@@ -18,8 +17,9 @@
     </header>
 
     <main>
-        <form method="get" action="envio_dados.php">
             <section>
+                <form action="script.php" method="post">
+
                 <h2>Informações do Atendimento</h2>
                 <div class="field">
                     <label for="numero_atendimento">Número do Atendimento:</label>
@@ -142,8 +142,13 @@
                         </label>
                     </p>
                     <p>
-                        <input type="checkbox" id="procedimento_2" name="procedimento[]" value="conjunto_acoes">
+                        <input type="checkbox" id="procedimento_2" name="procedimento[]" value="informacoes_incompletas">
                         <label for="procedimento_2">Prestar informações incompletas, como orientações que poderiam dar autonomia para o cliente em atendimentos futuros.
+                        </label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="procedimento_3" name="procedimento[]" value="referenciar_kb">
+                        <label for="procedimento_3">Não referenciar ao final do atendimento os KB's utilizados para orientação e resolução do caso.
                         </label>
                     </p>
                     <div class="field">
@@ -152,7 +157,6 @@
                     </div>
                 </article>
             </section>
-
             <div class="field">
                 <label for="comentarios_gerais">Comentários gerais acerca do atendimento:</label>
                 <textarea id="comentarios_gerais" name="comentarios_gerais"></textarea>
