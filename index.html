@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <title>Formulário de Avaliação</title>
+    <button type="button" id="generatePDF">Salvar como PDF</button>
+</head>
+
+<body>
+
+    <header>
+        <h1>Formulário de Avaliação</h1>
+        <h3>HelpCenter Chatbot</h3>
+    </header>
+
+    <main>
+        <form method="get" action="envio_dados.php">
+            <section>
+                <h2>Informações do Atendimento</h2>
+                <div class="field">
+                    <label for="numero_atendimento">Número do Atendimento:</label>
+                    <input type="text" id="numero_atendimento" name="numero_atendimento" placeholder="Número do atendimento" required>
+                </div>
+                <div class="field">
+                    <label for="matricula">Matrícula/Chave:</label>
+                    <input type="text" id="matricula" name="matricula" placeholder="Matrícula/Chave" required>
+                </div>
+                <div class="field">
+                    <label for="assunto">Assunto do Atendimento:</label>
+                    <input type="text" id="assunto" name="assunto" placeholder="Assunto do atendimento" required>
+                </div>
+                <div class="field">
+                    <label for="canal">Canal de Atendimento:</label>
+                    <input type="text" id="canal" name="canal" placeholder="Canal de atendimento" required>
+                </div>
+            </section>
+
+            <section>
+                <h2>Critérios de Avaliação</h2>
+
+                <div id="score" style="font-weight: bold; margin-top: 20px;">Pontuação restante: 100</div>
+
+                <article>
+                    <h4>Resolutividade</h4>
+                    <p>
+                        <input type="checkbox" id="resolutividade_1" name="resolutividade[]" value="nao_solucionar">
+                        <label for="resolutividade_1">Não solucionar ou não buscar solucionar a demanda/solicitação do cliente. Seja por meio de procedimentos que estão em sua alçada e não são realizados, ou por apresentar uma solução mais onerosa ao cliente, quando há alternativas mais simples.
+                        </label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="resolutividade_2" name="resolutividade[]" value="procedimentos_essenciais">
+                        <label for="resolutividade_2">Não realizar procedimentos essenciais referente ao assunto da demanda (como encaminhamento para outros setores responsáveis pela tratativa da demanda ou consultas de informações nas ferramentas disponíveis: Meu Suporte, Autodiagnóstico, PuTTY, SisBB e etc).
+                        </label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="resolutividade_3" name="resolutividade[]" value="informacoes_incorretas">
+                        <label for="resolutividade_3">Prestar informações incorretas que afetem a solução da demanda e tornem a experiência do cliente onerosa (Ex: cliente com bloqueio de senha numérica orientado a realizar baixa de matriz).
+                        </label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="resolutividade_4" name="resolutividade[]" value="nao_sondar">
+                        <label for="resolutividade_4">Não sondar corretamente a demanda do cliente, realizando um atendimento com base em "achismos", acarretando na falta de resolutividade no pedido do cliente.
+                        </label>
+                    </p>
+                    <div class="field">
+                        <label for="comentario_resolutividade">Comentário:</label>
+                        <textarea id="comentario_resolutividade" name="comentario_resolutividade"></textarea>
+                    </div>
+                    <h4>Ética</h4>
+                    <p>
+                        <input type="checkbox" id="etica_1" name="etica[]" value="encerrar_sem_resolver">
+                        <label for="etica_1">Encerrar o atendimento a fim de se livrar do cliente, sem solucionar a demanda.
+                        </label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="etica_2" name="etica[]" value="comentarios_desnecessarios">
+                        <label for="etica_2">Fazer comentários desnecessários sobre atendimento anterior ou emitir juízo de valor sobre funcionários BB (gerentes, técnicos ou contratados).
+                        </label>
+                    </p>
+                    <div class="field">
+                        <label for="comentario_etica">Comentário:</label>
+                        <textarea id="comentario_etica" name="comentario_etica"></textarea>
+                    </div>
+                    <h4>Atendimento Humanizado</h4>
+                    <p>
+                        <input type="checkbox" id="humanizado_1" name="humanizado[]" value="">
+                        <label for="humanizado_1">Não demonstrar interesse em compreender a solicitação do cliente.
+                        </label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="humanizado_2" name="humanizado[]" value="interromper_cliente">
+                        <label for="humanizado_2">Interromper o cliente durante suas falas, a fim de adivinhar a demanda.
+                        </label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="humanizado_3" name="humanizado[]" value="demonstrar_impacienca">
+                        <label for="humanizado_3">Demonstrar irritação ou impaciência durante o atendimento.
+                        </label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="humanizado_4" name="humanizado[]" value="personalizar_atendimento">
+                        <label for="humanizado_4">Não personalizar o atendimento chamando o cliente pelo nome durante o contato.
+                        </label>
+                    </p>
+                    <div class="field">
+                        <label for="comentario_humanizado">Comentário:</label>
+                        <textarea id="comentario_humanizado" name="comentario_humanizado"></textarea>
+                    </div>
+                    <h4>Comunicação</h4>
+                    <p>
+                        <input type="checkbox" id="comunicacao_1" name="comunicacao[]" value="manter_presente">
+                        <label for="comunicacao_1">Não se manter presente durante o atendimento (em atendimentos longos, demonstrar que está acompanhando a demanda).
+                        </label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="comunicacao_2" name="comunicacao[]" value="saudacao_inicial">
+                        <label for="comunicacao_2">Não iniciar e encerrar o atendimento utilizando frases indicadas (desejar bom dia/tarde/noite e encaminhar o cliente para a Pesquisa de Satisfação ao final do contato).
+                        </label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="comunicacao_3" name="comunicacao[]" value="termos_tecnicos">
+                        <label for="comunicacao_3">Não adaptar a linguagem para facilitar a comunicação com o cliente (Ex: utilizar termos técnicos com clientes leigos, sem explicar de forma clara o significado de cada orientação prestada).
+                        </label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="comunicacao_4" name="comunicacao[]" value="facilitar_comunicacao">
+                        <label for="comunicacao_4">Não ofertar outro meio de contrato com o cliente (Teams, e-mail, ligação), buscando facilitar a comunicação e resolução de uma demanda.
+                        </label>
+                    </p>
+                    <div class="field">
+                        <label for="comentario_comunicacao">Comentário:</label>
+                        <textarea id="comentario_comunicacao" name="comentario_comunicacao"></textarea>
+                    </div>
+                    <h4>Procedimento</h4>
+                    <p>
+                        <input type="checkbox" id="procedimento_1" name="procedimento[]" value="conjunto_acoes">
+                        <label for="procedimento_1">Executar o conjunto de ações indicadas nos normativos (seguir orientações nos roteiros de atendimento como o "Meu Suporte").
+                        </label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="procedimento_2" name="procedimento[]" value="conjunto_acoes">
+                        <label for="procedimento_2">Prestar informações incompletas, como orientações que poderiam dar autonomia para o cliente em atendimentos futuros.
+                        </label>
+                    </p>
+                    <div class="field">
+                        <label for="comentario_procedimento">Comentário:</label>
+                        <textarea id="comentario_procedimento" name="comentario_procedimento"></textarea>
+                    </div>
+                </article>
+            </section>
+
+            <div class="field">
+                <label for="comentarios_gerais">Comentários gerais acerca do atendimento:</label>
+                <textarea id="comentarios_gerais" name="comentarios_gerais"></textarea>
+            </div>
+            <input type="submit" name="enviar" value="Enviar">
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2024 sanbrs. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    
+
+</body>
+</html>
