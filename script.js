@@ -38,3 +38,36 @@ document.addEventListener("DOMContentLoaded", () => {
     calcularPontuacao();
 
     });
+
+    document.getElementById("save-pdf").addEventListener("click", function () {
+        const form = document.querySelector("form");
+        const formData = new FormData(form);
+        const { jsPDF } = window.jspdf; // jsPDF carregado da biblioteca
+        const doc = new jsPDF();
+    
+        doc.setFontSize(16);
+        doc.text("Formulário de Avaliação - HelpCenter Chatbot", 10, 10);
+    
+        doc.setFontSize(12);
+        doc.text("Informações do Atendimento:", 10, 20);
+    
+        let yPosition = 30; // Posição inicial no eixo Y
+        doc.setFontSize(10);
+    
+        // Adicionar campos preenchidos no PDF
+        doc.text(`Número do Atendimento: ${formData.get("numero_atendimento")}`, 10, yPosition);
+        yPosition += 10;
+        doc.text(`Matrícula/Chave: ${formData.get("matricula")}`, 10, yPosition);
+        yPosition += 10;
+        doc.text(`Assunto: ${formData.get("assunto")}`, 10, yPosition);
+        yPosition += 10;
+    
+        doc.text("Comentários Gerais:", 10, yPosition);
+        yPosition += 10;
+        doc.text(formData.get("comentarios_gerais") || "Nenhum comentário.", 10, yPosition);
+    
+        // Salvar o PDF
+        doc.save("formulario_avaliacao.pdf");
+    });
+    
+    
