@@ -4,13 +4,16 @@ body {
     font-optical-sizing: auto;
     font-weight: weight;
     font-style: normal;
-    
+    text-align: justify;
+    margin-left: 200px;
+    margin-right: 200px;
 }
        
 header, footer {
-    background: #acd2e3;
+    background: #ececeb;
     padding: 10px 20px;
     text-align: center;
+    border-radius: 8px;
 }
 
 .field {
@@ -44,4 +47,15 @@ h4 {
 
 p {
     margin: 10px 0;
+}
+
+//*section {
+    background-color: rgb(245, 244, 244);
+    border-radius: 8px;
+} *//
+
+button {
+    border-radius: 10px;
+    text-align: center;
+    background-color: #c5d5e6;
 }

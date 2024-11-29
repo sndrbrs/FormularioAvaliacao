@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const totalPontos = 100; // Pontuação inicial total
+    const totalPontos = 0; // Pontuação inicial total
     const distribuicaoPontos = {
         resolutividade: 30,
         etica: 20,
@@ -17,18 +17,30 @@ document.addEventListener("DOMContentLoaded", () => {
         let deducaoPontos = 0;
 
         Object.keys(distribuicaoPontos).forEach((criterio) => {
-            const groupCheckboxes = document.querySelectorAll(`input[name="${criterio}[]"]:checked`);
-            const groupTotalCheckboxes = document.querySelectorAll(`input[name="${criterio}[]"]`).length;
+            const grupoCheckboxes = document.querySelectorAll(`input[name="${criterio}[]"]:checked`);
+            const grupoTotalCheckboxes = document.querySelectorAll(`input[name="${criterio}[]"]`).length;
 
-            if (groupTotalCheckboxes > 0) {
-                const deducaoItem = distribuicaoPontos[criterio] / groupTotalCheckboxes;
-                deducaoPontos += groupCheckboxes.length * deducaoItem;
+            if (grupoTotalCheckboxes > 0) {
+                const deducaoItem = distribuicaoPontos[criterio] / grupoTotalCheckboxes;
+                deducaoPontos += grupoCheckboxes.length * deducaoItem;
             }
         });
 
-        pontuacaoAtual = Math.max(0, totalPontos - deducaoPontos);
+
+        pontuacaoAtual = Math.max(0, totalPontos + deducaoPontos);
         mostradorPontos.textContent = `Pontuação da avaliação: ${pontuacaoAtual.toFixed(2)}`;
     };
+
+    document.getElementById("toggle-check").addEventListener("click", () => {
+        const checkboxes = document.querySelectorAll("input[type='checkbox']");
+        const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = !allChecked; // Marca e desmarca botão "selecionar todos"
+        });
+
+        calcularPontuacao(); // Atualiza a pontuação com base no status do botão "selecionar"
+    });
+    
 
     // Adicionar evento de mudança a cada checkbox
     checkboxes.forEach((checkbox) => {
